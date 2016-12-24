@@ -22,37 +22,45 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MenuStrip = new System.Windows.Forms.MenuStrip();
+            this.PrimaryContextMenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.QuitFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LoadFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FirstFileMenuSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.SaveFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FirstFileMenuSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.SecondFileMenuSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.QuitFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noMapLoadedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuStrip.SuspendLayout();
+            this.OpenMapDialog = new System.Windows.Forms.OpenFileDialog();
+            this.PrimaryMapStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.TitleStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.TilesetStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BackgroundStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.SizeStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.TileSizeStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.PrimaryContextMenuStrip.SuspendLayout();
+            this.PrimaryMapStatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // MenuStrip
+            // PrimaryContextMenuStrip
             // 
-            this.MenuStrip.BackColor = System.Drawing.Color.LimeGreen;
-            this.MenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.MenuStrip.Font = new System.Drawing.Font("Segoe UI Light", 13.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PrimaryContextMenuStrip.BackColor = System.Drawing.SystemColors.Control;
+            this.PrimaryContextMenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.PrimaryContextMenuStrip.Font = new System.Drawing.Font("Segoe UI Light", 13.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.PrimaryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenuItem});
-            this.MenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.MenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Padding = new System.Windows.Forms.Padding(0);
-            this.MenuStrip.Size = new System.Drawing.Size(984, 23);
-            this.MenuStrip.TabIndex = 0;
-            this.MenuStrip.Text = "MainMenuStrip";
+            this.PrimaryContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.PrimaryContextMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.PrimaryContextMenuStrip.Name = "PrimaryContextMenuStrip";
+            this.PrimaryContextMenuStrip.Padding = new System.Windows.Forms.Padding(0);
+            this.PrimaryContextMenuStrip.Size = new System.Drawing.Size(984, 23);
+            this.PrimaryContextMenuStrip.TabIndex = 0;
+            this.PrimaryContextMenuStrip.Text = "MainMenuStrip";
             // 
             // FileMenuItem
             // 
-            this.FileMenuItem.BackColor = System.Drawing.Color.LimeGreen;
+            this.FileMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewFileMenuItem,
             this.LoadFileMenuItem,
@@ -65,16 +73,6 @@
             this.FileMenuItem.Size = new System.Drawing.Size(41, 23);
             this.FileMenuItem.Text = "File";
             // 
-            // QuitFileMenuItem
-            // 
-            this.QuitFileMenuItem.BackColor = System.Drawing.SystemColors.Control;
-            this.QuitFileMenuItem.Font = new System.Drawing.Font("Segoe UI Light", 9.5F);
-            this.QuitFileMenuItem.Name = "QuitFileMenuItem";
-            this.QuitFileMenuItem.Size = new System.Drawing.Size(152, 24);
-            this.QuitFileMenuItem.Text = "Quit";
-            this.QuitFileMenuItem.ToolTipText = "Click to exit the map editor.";
-            this.QuitFileMenuItem.Click += new System.EventHandler(this.QuitFileMenuItem_Click);
-            // 
             // NewFileMenuItem
             // 
             this.NewFileMenuItem.Name = "NewFileMenuItem";
@@ -86,6 +84,15 @@
             this.LoadFileMenuItem.Name = "LoadFileMenuItem";
             this.LoadFileMenuItem.Size = new System.Drawing.Size(152, 24);
             this.LoadFileMenuItem.Text = "Load...";
+            this.LoadFileMenuItem.ToolTipText = "Click to load a map.";
+            this.LoadFileMenuItem.Click += new System.EventHandler(this.LoadFileMenuItem_Click);
+            // 
+            // FirstFileMenuSeparator
+            // 
+            this.FirstFileMenuSeparator.BackColor = System.Drawing.SystemColors.Control;
+            this.FirstFileMenuSeparator.ForeColor = System.Drawing.SystemColors.Control;
+            this.FirstFileMenuSeparator.Name = "FirstFileMenuSeparator";
+            this.FirstFileMenuSeparator.Size = new System.Drawing.Size(149, 6);
             // 
             // SaveFileMenuItem
             // 
@@ -99,17 +106,20 @@
             this.SaveAsFileMenuItem.Size = new System.Drawing.Size(152, 24);
             this.SaveAsFileMenuItem.Text = "Save As...";
             // 
-            // FirstFileMenuSeparator
-            // 
-            this.FirstFileMenuSeparator.BackColor = System.Drawing.SystemColors.Control;
-            this.FirstFileMenuSeparator.ForeColor = System.Drawing.SystemColors.Control;
-            this.FirstFileMenuSeparator.Name = "FirstFileMenuSeparator";
-            this.FirstFileMenuSeparator.Size = new System.Drawing.Size(149, 6);
-            // 
             // SecondFileMenuSeparator
             // 
             this.SecondFileMenuSeparator.Name = "SecondFileMenuSeparator";
             this.SecondFileMenuSeparator.Size = new System.Drawing.Size(149, 6);
+            // 
+            // QuitFileMenuItem
+            // 
+            this.QuitFileMenuItem.BackColor = System.Drawing.SystemColors.Control;
+            this.QuitFileMenuItem.Font = new System.Drawing.Font("Segoe UI Light", 9.5F);
+            this.QuitFileMenuItem.Name = "QuitFileMenuItem";
+            this.QuitFileMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.QuitFileMenuItem.Text = "Quit";
+            this.QuitFileMenuItem.ToolTipText = "Click to exit the map editor.";
+            this.QuitFileMenuItem.Click += new System.EventHandler(this.QuitFileMenuItem_Click);
             // 
             // noMapLoadedToolStripMenuItem
             // 
@@ -117,23 +127,100 @@
             this.noMapLoadedToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.noMapLoadedToolStripMenuItem.Text = "No map loaded.";
             // 
+            // OpenMapDialog
+            // 
+            this.OpenMapDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenMapDialog_FileOk);
+            // 
+            // PrimaryMapStatusStrip
+            // 
+            this.PrimaryMapStatusStrip.BackColor = System.Drawing.SystemColors.Control;
+            this.PrimaryMapStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TitleStripStatusLabel,
+            this.TilesetStripStatusLabel,
+            this.BackgroundStripStatusLabel,
+            this.SizeStripStatusLabel,
+            this.TileSizeStripStatusLabel});
+            this.PrimaryMapStatusStrip.Location = new System.Drawing.Point(0, 532);
+            this.PrimaryMapStatusStrip.Name = "PrimaryMapStatusStrip";
+            this.PrimaryMapStatusStrip.Size = new System.Drawing.Size(984, 29);
+            this.PrimaryMapStatusStrip.SizingGrip = false;
+            this.PrimaryMapStatusStrip.TabIndex = 1;
+            this.PrimaryMapStatusStrip.Text = "statusStrip1";
+            // 
+            // TitleStripStatusLabel
+            // 
+            this.TitleStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.TitleStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TitleStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
+            this.TitleStripStatusLabel.Name = "TitleStripStatusLabel";
+            this.TitleStripStatusLabel.Size = new System.Drawing.Size(192, 23);
+            this.TitleStripStatusLabel.Spring = true;
+            this.TitleStripStatusLabel.Text = "Title:";
+            // 
+            // TilesetStripStatusLabel
+            // 
+            this.TilesetStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.TilesetStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.TilesetStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TilesetStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
+            this.TilesetStripStatusLabel.Name = "TilesetStripStatusLabel";
+            this.TilesetStripStatusLabel.Size = new System.Drawing.Size(192, 23);
+            this.TilesetStripStatusLabel.Spring = true;
+            this.TilesetStripStatusLabel.Text = "Tileset:";
+            // 
+            // BackgroundStripStatusLabel
+            // 
+            this.BackgroundStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.BackgroundStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.BackgroundStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.BackgroundStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
+            this.BackgroundStripStatusLabel.Name = "BackgroundStripStatusLabel";
+            this.BackgroundStripStatusLabel.Size = new System.Drawing.Size(192, 23);
+            this.BackgroundStripStatusLabel.Spring = true;
+            this.BackgroundStripStatusLabel.Text = "Background:";
+            // 
+            // SizeStripStatusLabel
+            // 
+            this.SizeStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.SizeStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.SizeStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.SizeStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
+            this.SizeStripStatusLabel.Name = "SizeStripStatusLabel";
+            this.SizeStripStatusLabel.Size = new System.Drawing.Size(192, 23);
+            this.SizeStripStatusLabel.Spring = true;
+            this.SizeStripStatusLabel.Text = "Size:";
+            // 
+            // TileSizeStripStatusLabel
+            // 
+            this.TileSizeStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.TileSizeStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.TileSizeStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TileSizeStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
+            this.TileSizeStripStatusLabel.Name = "TileSizeStripStatusLabel";
+            this.TileSizeStripStatusLabel.Size = new System.Drawing.Size(192, 23);
+            this.TileSizeStripStatusLabel.Spring = true;
+            this.TileSizeStripStatusLabel.Text = "Tile size:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(984, 561);
-            this.Controls.Add(this.MenuStrip);
+            this.Controls.Add(this.PrimaryMapStatusStrip);
+            this.Controls.Add(this.PrimaryContextMenuStrip);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.MenuStrip;
+            this.MainMenuStrip = this.PrimaryContextMenuStrip;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "The Teleporter - Map Editor";
-            this.MenuStrip.ResumeLayout(false);
-            this.MenuStrip.PerformLayout();
+            this.PrimaryContextMenuStrip.ResumeLayout(false);
+            this.PrimaryContextMenuStrip.PerformLayout();
+            this.PrimaryMapStatusStrip.ResumeLayout(false);
+            this.PrimaryMapStatusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,7 +229,7 @@
         #endregion
         private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem QuitFileMenuItem;
-        private System.Windows.Forms.MenuStrip MenuStrip;
+        private System.Windows.Forms.MenuStrip PrimaryContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem NewFileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LoadFileMenuItem;
         private System.Windows.Forms.ToolStripSeparator FirstFileMenuSeparator;
@@ -150,6 +237,13 @@
         private System.Windows.Forms.ToolStripMenuItem SaveAsFileMenuItem;
         private System.Windows.Forms.ToolStripSeparator SecondFileMenuSeparator;
         private System.Windows.Forms.ToolStripMenuItem noMapLoadedToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog OpenMapDialog;
+        private System.Windows.Forms.StatusStrip PrimaryMapStatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel TitleStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel TilesetStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel BackgroundStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel SizeStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel TileSizeStripStatusLabel;
     }
 }
 
