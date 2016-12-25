@@ -6,21 +6,21 @@ using System.Windows.Forms;
 
 namespace TPMapEditor
 {
-    public partial class MainForm : Form
-    {
-        Map map;
+	public partial class MainForm : Form
+	{
+		Map map;
 
-        public MainForm()
-        {
-            InitializeComponent();
+		public MainForm()
+		{
+			InitializeComponent();
 
-            InitializeMap();
+			InitializeMap();
 
-            InitializeWindowSize();
-            InitializeMenuStrip();
-            InitializeOpenDialog();
+			InitializeWindowSize();
+			InitializeMenuStrip();
+			InitializeOpenDialog();
 			InitializeSaveDialog();
-        }
+		}
 
 		private void InitializeMap()
 		{
@@ -40,9 +40,9 @@ namespace TPMapEditor
 		}
 
 		private void InitializeOpenDialog()
-        {
-            OpenMapDialog.InitialDirectory = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "Maps");
-        }
+		{
+			OpenMapDialog.InitialDirectory = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "Maps");
+		}
 
 		private void InitializeSaveDialog()
 		{
@@ -50,23 +50,23 @@ namespace TPMapEditor
 		}
 
 		private void InitializeMenuStrip()
-        {
-            foreach (ToolStripMenuItem menuItem in PrimaryContextMenuStrip.Items)
-                ((ToolStripDropDownMenu)menuItem.DropDown).ShowImageMargin = false;
-            
-            
-            PrimaryContextMenuStrip.Renderer = new GreenStripRenderer();
-            PrimaryMapStatusStrip.Renderer = new GreenStripRenderer();
-        }
+		{
+			foreach (ToolStripMenuItem menuItem in PrimaryContextMenuStrip.Items)
+				((ToolStripDropDownMenu)menuItem.DropDown).ShowImageMargin = false;
+			
+			
+			PrimaryContextMenuStrip.Renderer = new GreenStripRenderer();
+			PrimaryMapStatusStrip.Renderer = new GreenStripRenderer();
+		}
 
-        private void InitializeWindowSize()
-        {
-            Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-            int newWidth = Width >= screen.Width ? screen.Width : (screen.Width + Width) / 2;
-            int newHeight = Height >= screen.Height ? screen.Height : (screen.Height + Height) / 2;
-            Location = new Point((screen.Width - newWidth) / 2, (screen.Height - newHeight) / 2);
-            Size = new Size(newWidth, newHeight);
-        }
+		private void InitializeWindowSize()
+		{
+			Rectangle screen = Screen.PrimaryScreen.WorkingArea;
+			int newWidth = Width >= screen.Width ? screen.Width : (screen.Width + Width) / 2;
+			int newHeight = Height >= screen.Height ? screen.Height : (screen.Height + Height) / 2;
+			Location = new Point((screen.Width - newWidth) / 2, (screen.Height - newHeight) / 2);
+			Size = new Size(newWidth, newHeight);
+		}
 
 		private void NewFileMenuItem_Click(object sender, EventArgs e)
 		{
@@ -74,9 +74,9 @@ namespace TPMapEditor
 		}
 
 		private void LoadFileMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenMapDialog.ShowDialog();
-        }
+		{
+			OpenMapDialog.ShowDialog();
+		}
 
 		private void SaveFileMenuItem_Click(object sender, EventArgs e)
 		{

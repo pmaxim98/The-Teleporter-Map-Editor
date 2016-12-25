@@ -1,26 +1,26 @@
 ﻿namespace TPMapEditor
 {
-    partial class MainForm
-    {
-        private System.ComponentModel.IContainer components = null;
+	partial class MainForm
+	{
+		private System.ComponentModel.IContainer components = null;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.PrimaryContextMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +50,7 @@
 			this.PrimaryContextMenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.PrimaryContextMenuStrip.Font = new System.Drawing.Font("Segoe UI Light", 13.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.PrimaryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileMenuItem});
+			this.FileMenuItem});
 			this.PrimaryContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.PrimaryContextMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.PrimaryContextMenuStrip.Name = "PrimaryContextMenuStrip";
@@ -63,13 +63,13 @@
 			// 
 			this.FileMenuItem.BackColor = System.Drawing.SystemColors.Control;
 			this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.NewFileMenuItem,
-            this.LoadFileMenuItem,
-            this.FirstFileMenuSeparator,
-            this.SaveFileMenuItem,
-            this.SaveAsFileMenuItem,
-            this.SecondFileMenuSeparator,
-            this.QuitFileMenuItem});
+			this.NewFileMenuItem,
+			this.LoadFileMenuItem,
+			this.FirstFileMenuSeparator,
+			this.SaveFileMenuItem,
+			this.SaveAsFileMenuItem,
+			this.SecondFileMenuSeparator,
+			this.QuitFileMenuItem});
 			this.FileMenuItem.Name = "FileMenuItem";
 			this.FileMenuItem.Size = new System.Drawing.Size(41, 23);
 			this.FileMenuItem.Text = "File";
@@ -120,7 +120,7 @@
 			this.SaveAsFileMenuItem.Padding = new System.Windows.Forms.Padding(0);
 			this.SaveAsFileMenuItem.ShortcutKeyDisplayString = "Ctrl+Alt+S";
 			this.SaveAsFileMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.S)));
+			| System.Windows.Forms.Keys.S)));
 			this.SaveAsFileMenuItem.Size = new System.Drawing.Size(203, 22);
 			this.SaveAsFileMenuItem.Text = "Save As...";
 			this.SaveAsFileMenuItem.ToolTipText = "Click to save the current map as...";
@@ -161,11 +161,11 @@
 			// 
 			this.PrimaryMapStatusStrip.BackColor = System.Drawing.SystemColors.Control;
 			this.PrimaryMapStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TitleStripStatusLabel,
-            this.TilesetStripStatusLabel,
-            this.BackgroundStripStatusLabel,
-            this.SizeStripStatusLabel,
-            this.TileSizeStripStatusLabel});
+			this.TitleStripStatusLabel,
+			this.TilesetStripStatusLabel,
+			this.BackgroundStripStatusLabel,
+			this.SizeStripStatusLabel,
+			this.TileSizeStripStatusLabel});
 			this.PrimaryMapStatusStrip.Location = new System.Drawing.Point(0, 532);
 			this.PrimaryMapStatusStrip.Name = "PrimaryMapStatusStrip";
 			this.PrimaryMapStatusStrip.Size = new System.Drawing.Size(984, 29);
@@ -257,26 +257,26 @@
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
-        }
+		}
 
-        #endregion
-        private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem QuitFileMenuItem;
-        private System.Windows.Forms.MenuStrip PrimaryContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem NewFileMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem LoadFileMenuItem;
-        private System.Windows.Forms.ToolStripSeparator FirstFileMenuSeparator;
-        private System.Windows.Forms.ToolStripMenuItem SaveFileMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SaveAsFileMenuItem;
-        private System.Windows.Forms.ToolStripSeparator SecondFileMenuSeparator;
-        private System.Windows.Forms.ToolStripMenuItem noMapLoadedToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog OpenMapDialog;
-        private System.Windows.Forms.StatusStrip PrimaryMapStatusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel TitleStripStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel TilesetStripStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel BackgroundStripStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel SizeStripStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel TileSizeStripStatusLabel;
+		#endregion
+		private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem QuitFileMenuItem;
+		private System.Windows.Forms.MenuStrip PrimaryContextMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem NewFileMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem LoadFileMenuItem;
+		private System.Windows.Forms.ToolStripSeparator FirstFileMenuSeparator;
+		private System.Windows.Forms.ToolStripMenuItem SaveFileMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem SaveAsFileMenuItem;
+		private System.Windows.Forms.ToolStripSeparator SecondFileMenuSeparator;
+		private System.Windows.Forms.ToolStripMenuItem noMapLoadedToolStripMenuItem;
+		private System.Windows.Forms.OpenFileDialog OpenMapDialog;
+		private System.Windows.Forms.StatusStrip PrimaryMapStatusStrip;
+		private System.Windows.Forms.ToolStripStatusLabel TitleStripStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel TilesetStripStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel BackgroundStripStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel SizeStripStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel TileSizeStripStatusLabel;
 		private System.Windows.Forms.SaveFileDialog SaveMapDialog;
 	}
 }
