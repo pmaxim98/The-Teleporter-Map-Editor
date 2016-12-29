@@ -26,17 +26,31 @@ namespace TPMapEditor
 		{
 			map = new Map();
 
-			map.BackgroundChanged += Map_BackgroundChanged;
-			map.TilesetChanged += Map_TilesetChanged;
-			map.TitleChanged += Map_TitleChanged;
-			map.TileSizeChanged += Map_TileSizeChanged;
-			map.GridSizeChanged += Map_GridSizeChanged;
+			map.PropertyChanged += (sender, e) =>
+			{
+				switch (e.PropertyName)
+				{
+					case "Background":
+						BackgroundStripStatusLabel.Text = string.Format("Background: {0}", map.Background);
+						break;
+					case "GridSize":
+						SizeStripStatusLabel.Text = string.Format("Size: ({0} rows, {1} columns)", map.GridSize.Height, map.GridSize.Width);
+						break;
+					case "Tileset":
+						TilesetStripStatusLabel.Text = string.Format("Tileset: {0}", map.Tileset);
+						break;
+					case "TileSize":
+						TileSizeStripStatusLabel.Text = string.Format("Tile size: {0}", map.TileSize);
+						break;
+					case "FilePath":
+						TitleStripStatusLabel.Text = string.Format("Title: {0}", map.Title != string.Empty ? map.Title : "Temp");
+						break;
+					default:
+						break;
+				}
 
-			Map_BackgroundChanged(map, EventArgs.Empty);
-			Map_TilesetChanged(map, EventArgs.Empty);
-			Map_TitleChanged(map, EventArgs.Empty);
-			Map_TileSizeChanged(map, EventArgs.Empty);
-			Map_GridSizeChanged(map, EventArgs.Empty);
+				PrimaryMapStatusStrip.Refresh();
+			};
 		}
 
 		private void InitializeOpenDialog()
@@ -86,7 +100,14 @@ namespace TPMapEditor
 			}
 			else
 			{
-				map.Save();
+				try
+				{
+					map.Save(map.FilePath);
+				}
+				catch (Exception exc)
+				{
+					MessageBox.Show(exc.Message, "Can't save the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 			}
 		}
 
@@ -129,38 +150,14 @@ namespace TPMapEditor
 
 		private void SaveMapDialog_FileOk(object sender, CancelEventArgs e)
 		{
-			map.FilePath = SaveMapDialog.FileName;
-			map.Save();
-		}
-
-		private void Map_BackgroundChanged(object sender, EventArgs e)
-		{
-			BackgroundStripStatusLabel.Text = string.Format("Background: {0}", map.Background);
-			PrimaryMapStatusStrip.Refresh();
-		}
-
-		private void Map_TilesetChanged(object sender, EventArgs e)
-		{
-			TilesetStripStatusLabel.Text = string.Format("Tileset: {0}", map.Tileset);
-			PrimaryMapStatusStrip.Refresh();
-		}
-
-		private void Map_TitleChanged(object sender, EventArgs e)
-		{
-			TitleStripStatusLabel.Text = string.Format("Title: {0}", map.Title != string.Empty ? map.Title : "Temp");
-			PrimaryMapStatusStrip.Refresh();
-		}
-
-		private void Map_TileSizeChanged(object sender, EventArgs e)
-		{
-			TileSizeStripStatusLabel.Text = string.Format("Tile size: {0}", map.TileSize);
-			PrimaryMapStatusStrip.Refresh();
-		}
-
-		private void Map_GridSizeChanged(object sender, EventArgs e)
-		{
-			SizeStripStatusLabel.Text = string.Format("Size: ({0} rows, {1} columns)", map.GridSize.Height, map.GridSize.Width);
-			PrimaryMapStatusStrip.Refresh();
+			try
+			{
+				map.Save(SaveMapDialog.FileName);
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show(exc.Message, "Can't save the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 	}
 }

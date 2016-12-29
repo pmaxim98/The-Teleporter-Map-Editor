@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
+using System.Runtime.CompilerServices;
 
 namespace TPMapEditor
 {
-	class Map
+	class Map : INotifyPropertyChanged
 	{
 		short tileSize;
 		string path;
@@ -88,8 +89,9 @@ namespace TPMapEditor
 			this.TileSize = TileSize;
 		}
 
-		public void Save()
+		public void Save(string absolutePath)
 		{
+			FilePath = absolutePath;
 			using (StreamWriter writer = new StreamWriter(FilePath))
 			{
 				writer.WriteLine(string.Join(" ", GridSize.Height, GridSize.Width));
@@ -117,13 +119,16 @@ namespace TPMapEditor
 			public const int Total = 4;
 		};
 
-		/// <summary>
-		/// Gets the title (name) of the map.
-		/// </summary>
-		/// <returns>Returns a string that contains the map's title (name).</returns>
-		public string Title
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnPropertyChanged([CallerMemberName]string property = "")
 		{
-			get { return Path.GetFileNameWithoutExtension(path); }
+			PropertyChangedEventHandler handler = PropertyChanged;
+
+			if (handler != null)
+			{
+				handler(this, new PropertyChangedEventArgs(property));
+			}
 		}
 
 		public string FilePath
@@ -132,7 +137,7 @@ namespace TPMapEditor
 			set
 			{
 				path = value;
-				OnTitleChanged(EventArgs.Empty);
+				OnPropertyChanged();
 			}
 		}
    
@@ -149,7 +154,7 @@ namespace TPMapEditor
 					throw new ArgumentException("Invalid tile size.");
 
 				tileSize = value;
-				OnTileSizeChanged(EventArgs.Empty);
+				OnPropertyChanged();
 			}
 		}
 
@@ -166,20 +171,8 @@ namespace TPMapEditor
 					throw new ArgumentException("Invalid map size.");
 
 				gridSize = value;
-				OnGridSizeChanged(EventArgs.Empty);
+				OnPropertyChanged();
 			}
-		}
-
-		/// <summary>
-		/// Gets the size of the map in terms of pixels.
-		/// </summary>
-		/// <example> 
-		/// A map with a GridSize of 30x40 (30 rows, 40 columns) and a TileSize of 10 (pixels) will return a Size struct of 300x400 (pixels).
-		/// </example>
-		/// <returns>Returns a Size struct that contains the number of rows (height) and the number of columns (width) of the map.</returns>
-		public Size Size
-		{
-			get { return new Size(GridSize.Height * TileSize, GridSize.Width * TileSize); }
 		}
 
 		/// <summary>
@@ -195,7 +188,7 @@ namespace TPMapEditor
 					throw new ArgumentNullException("Background's string is null.");
 
 				background = value;
-				OnBackgroundChanged(EventArgs.Empty);
+				OnPropertyChanged();
 			}
 		}
 
@@ -212,59 +205,29 @@ namespace TPMapEditor
 					throw new ArgumentNullException("Tileset's string is null.");
 
 				tileset = value;
-				OnTilesetChanged(EventArgs.Empty);
+				OnPropertyChanged();
 			}
 		}
 
-		protected virtual void OnTileSizeChanged(EventArgs e)
+		/// <summary>
+		/// Gets the size of the map in terms of pixels.
+		/// </summary>
+		/// <example> 
+		/// A map with a GridSize of 30x40 (30 rows, 40 columns) and a TileSize of 10 (pixels) will return a Size struct of 300x400 (pixels).
+		/// </example>
+		/// <returns>Returns a Size struct that contains the number of rows (height) and the number of columns (width) of the map.</returns>
+		public Size Size
 		{
-			EventHandler handler = TileSizeChanged;
-			if (handler != null)
-			{
-				handler(this, e);
-			}
+			get { return new Size(GridSize.Height * TileSize, GridSize.Width * TileSize); }
 		}
 
-		protected virtual void OnGridSizeChanged(EventArgs e)
+		/// <summary>
+		/// Gets the title (name) of the map.
+		/// </summary>
+		/// <returns>Returns a string that contains the map's title (name).</returns>
+		public string Title
 		{
-			EventHandler handler = GridSizeChanged;
-			if (handler != null)
-			{
-				handler(this, e);
-			}
+			get { return Path.GetFileNameWithoutExtension(path); }
 		}
-
-		protected virtual void OnBackgroundChanged(EventArgs e)
-		{
-			EventHandler handler = BackgroundChanged;
-			if (handler != null)
-			{
-				handler(this, e);
-			}
-		}
-
-		protected virtual void OnTilesetChanged(EventArgs e)
-		{
-			EventHandler handler = TilesetChanged;
-			if (handler != null)
-			{
-				handler(this, e);
-			}
-		}
-
-		protected virtual void OnTitleChanged(EventArgs e)
-		{
-			EventHandler handler = TitleChanged;
-			if (handler != null)
-			{
-				handler(this, e);
-			}
-		}
-
-		public event EventHandler TileSizeChanged;
-		public event EventHandler GridSizeChanged;
-		public event EventHandler BackgroundChanged;
-		public event EventHandler TilesetChanged;
-		public event EventHandler TitleChanged;
 	}
 }
