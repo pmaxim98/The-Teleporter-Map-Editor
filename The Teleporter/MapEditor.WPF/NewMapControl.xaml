@@ -1,0 +1,109 @@
+﻿<UserControl x:Name="NewMapDialog" x:Class="MapEditor.WPF.NewMapControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MapEditor.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500" Width="320" Height="200">
+
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="RedAndBlackBrush" EndPoint="0.5, 1.0" StartPoint="0.5, 0.0">
+            <GradientStop Offset="1.0" Color="Black" />
+            <GradientStop Offset="0.0" Color="Red" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="OrangeAndBlackBrush" EndPoint="0.5, 1.0" StartPoint="0.5, 0.0">
+            <GradientStop Offset="1.0" Color="Black" />
+            <GradientStop Offset="0.0" Color="#FFE45D00" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GreenishBrush" EndPoint="0.5, 1.0" StartPoint="0.5, 0.0">
+            <GradientStop Offset="1.0" Color="#a4c191" />
+            <GradientStop Offset="0.0" Color="#cdf2b6" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PinkishBrush" EndPoint="0.5, 1.0" StartPoint="0.5, 0.0">
+            <GradientStop Offset="1.0" Color="#FFFDE3E3" />
+            <GradientStop Offset="0.0" Color="White" />
+        </LinearGradientBrush>
+
+        <Style x:Key="RedTelepText" TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="FontFamily" Value="/MapEditor.Resources;component/Fonts/#Cardinal" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="RenderTransformOrigin" Value="1.0, 0.5" />
+        </Style>
+
+        <Style x:Key="RedTelepTextBox" TargetType="TextBox">
+            <Setter Property="Foreground" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="Background" Value="{StaticResource PinkishBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="CaretBrush" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="SelectionBrush" Value="{StaticResource OrangeAndBlackBrush}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="FontFamily" Value="Microsoft JhengHei" />
+            <Setter Property="MaxLines" Value="1" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Light" />
+        </Style>
+
+        <Style x:Key="GreenTelepButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="Background" Value="{StaticResource GreenishBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="FontFamily" Value="/MapEditor.Resources;component/Fonts/#Cardinal" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Width" Value="60" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1.3"/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RedTelepComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Foreground" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="Background" Value="{StaticResource PinkishBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource RedAndBlackBrush}" />
+            <Setter Property="FontFamily" Value="Microsoft JhengHei" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Width="320" Height="200" Background="{StaticResource GreenishBrush}">
+        <Label x:Name="SizeLabel" Content="Size:" Margin="0, 20, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
+        <Label x:Name="TilesetLabel" Content="Tileset:" Margin="0, 55, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
+        <Label x:Name="BackgroundLabel" Content="Background:" Margin="0, 90, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
+        <Label x:Name="TileSizeLabel" Content="Tile size:" Margin="0, 125, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
+        <Label x:Name="XLabel" Content="x" Margin="0, 18, 38, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
+
+        <Button x:Name="CreateButton" Content="Create" HorizontalAlignment="Left" Margin="75, 170, 0, 0" Style="{StaticResource GreenTelepButton}" IsDefault="True" Click="CreateButton_Click" />
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0, 170, 75, 0" RenderTransformOrigin="1.0, 0.0" Style="{StaticResource GreenTelepButton}" IsCancel="True" />
+
+        <TextBox x:Name="WidthBox" Margin="0, 30, 10, 0" HorizontalAlignment="Center" MaxLength="4" Style="{StaticResource RedTelepTextBox}" TextChanged="WidthBox_TextChanged" />
+        <TextBox x:Name="HeightBox" Margin="96, 30, 0, 0" HorizontalAlignment="Center" MaxLength="4" Style="{StaticResource RedTelepTextBox}" TextChanged="HeightBox_TextChanged" />
+        <TextBox x:Name="TileSizeBox" Margin="0, 135, 10, 0" HorizontalAlignment="Center" MaxLength="3" Style="{StaticResource RedTelepTextBox}" TextChanged="TileSizeBox_TextChanged" />
+
+        <ComboBox x:Name="TilesetComboBox" Width="150" HorizontalAlignment="Center" Margin="100, 64, 0, 0" VerticalAlignment="Top" Style="{StaticResource RedTelepComboBox}">
+            <ComboBoxItem IsSelected="True">Select a tileset.</ComboBoxItem>
+        </ComboBox>
+        <ComboBox x:Name="BackgroundComboBox" Width="150" HorizontalAlignment="Center" Margin="100, 99, 0, 0" VerticalAlignment="Top" Style="{StaticResource RedTelepComboBox}">
+            <ComboBoxItem IsSelected="True">Select a background.</ComboBoxItem>
+        </ComboBox>
+    </Grid>
+</UserControl>

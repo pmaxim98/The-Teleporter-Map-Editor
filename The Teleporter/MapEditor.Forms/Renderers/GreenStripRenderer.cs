@@ -2,9 +2,9 @@
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace TPMapEditor
+namespace MapEditor.Forms.Renderers
 {
-	class GreenStripRenderer : ToolStripProfessionalRenderer
+	public class GreenStripRenderer : ToolStripProfessionalRenderer
 	{
 		protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
 		{

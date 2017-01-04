@@ -1,16 +1,9 @@
 ﻿using System;
 
-namespace TPMapEditor
+namespace MapEditor.Entities
 {
-	enum Solidity : byte { Floor, Obstacle, Wall };
-	class Tile
+	public class Tile
 	{
-		byte propsID;
-		short damage;
-		public Solidity Solidity { get; set; }
-
-		public static int TotalProperties = 3;
-
 		/// <summary>
 		/// Constructs a tile that has the ID of the first tile in the loaded tileset. The tile is also a floor and deals no damage.
 		/// </summary>
@@ -34,6 +27,8 @@ namespace TPMapEditor
 			this.Solidity = Solidity;
 		}
 
+		public Solidity Solidity { get; set; }
+
 		/// <summary>
 		/// Gets or sets the ID of the properties of a corresponing tile.
 		/// </summary>
@@ -42,7 +37,7 @@ namespace TPMapEditor
 			get { return propsID; }
 			set
 			{
-				if(value == 0)
+				if (value == 0)
 					throw new ArgumentException("Invalid ID for tileset's tiles properties.");
 
 				propsID = value;
@@ -68,5 +63,8 @@ namespace TPMapEditor
 		{
 			return "[" + string.Join(",", PropertiesID, (byte)Solidity, Damage) + "]";
 		}
+
+		private byte propsID;
+		private short damage;
 	}
 }

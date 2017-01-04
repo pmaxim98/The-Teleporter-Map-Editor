@@ -50,7 +50,7 @@
 			this.PrimaryContextMenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.PrimaryContextMenuStrip.Font = new System.Drawing.Font("Segoe UI Light", 13.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.PrimaryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.FileMenuItem});
+            this.FileMenuItem});
 			this.PrimaryContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.PrimaryContextMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.PrimaryContextMenuStrip.Name = "PrimaryContextMenuStrip";
@@ -63,13 +63,13 @@
 			// 
 			this.FileMenuItem.BackColor = System.Drawing.SystemColors.Control;
 			this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.NewFileMenuItem,
-			this.LoadFileMenuItem,
-			this.FirstFileMenuSeparator,
-			this.SaveFileMenuItem,
-			this.SaveAsFileMenuItem,
-			this.SecondFileMenuSeparator,
-			this.QuitFileMenuItem});
+            this.NewFileMenuItem,
+            this.LoadFileMenuItem,
+            this.FirstFileMenuSeparator,
+            this.SaveFileMenuItem,
+            this.SaveAsFileMenuItem,
+            this.SecondFileMenuSeparator,
+            this.QuitFileMenuItem});
 			this.FileMenuItem.Name = "FileMenuItem";
 			this.FileMenuItem.Size = new System.Drawing.Size(41, 23);
 			this.FileMenuItem.Text = "File";
@@ -120,7 +120,7 @@
 			this.SaveAsFileMenuItem.Padding = new System.Windows.Forms.Padding(0);
 			this.SaveAsFileMenuItem.ShortcutKeyDisplayString = "Ctrl+Alt+S";
 			this.SaveAsFileMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-			| System.Windows.Forms.Keys.S)));
+            | System.Windows.Forms.Keys.S)));
 			this.SaveAsFileMenuItem.Size = new System.Drawing.Size(203, 22);
 			this.SaveAsFileMenuItem.Text = "Save As...";
 			this.SaveAsFileMenuItem.ToolTipText = "Click to save the current map as...";
@@ -161,11 +161,11 @@
 			// 
 			this.PrimaryMapStatusStrip.BackColor = System.Drawing.SystemColors.Control;
 			this.PrimaryMapStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.TitleStripStatusLabel,
-			this.TilesetStripStatusLabel,
-			this.BackgroundStripStatusLabel,
-			this.SizeStripStatusLabel,
-			this.TileSizeStripStatusLabel});
+            this.TitleStripStatusLabel,
+            this.TilesetStripStatusLabel,
+            this.BackgroundStripStatusLabel,
+            this.SizeStripStatusLabel,
+            this.TileSizeStripStatusLabel});
 			this.PrimaryMapStatusStrip.Location = new System.Drawing.Point(0, 532);
 			this.PrimaryMapStatusStrip.Name = "PrimaryMapStatusStrip";
 			this.PrimaryMapStatusStrip.Size = new System.Drawing.Size(984, 29);
