@@ -9,6 +9,7 @@ I created this project mainly to improve my non-existent skills in _C#_ (and als
 ####  Technology
 * Microsoft Visual C# **2015** with target framework: .NET Framework **4.5.2**:
   * WinForms (GUI)
+  * WPF (GUI)
   * GDI+ (Drawing the map)
 
 
