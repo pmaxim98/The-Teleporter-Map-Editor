@@ -69,7 +69,11 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Resource Include="..\MapEditor.Resources\Resources\Cardinal.ttf">
+      <Link>Cardinal.ttf</Link>
+    </Resource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -86,6 +90,10 @@
     <ProjectReference Include="..\MapEditor.Resources\MapEditor.Resources.csproj">
       <Project>{3729e63e-c12e-47e5-93cc-8dd1a4a80774}</Project>
       <Name>MapEditor.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MapEditor.Utilities\MapEditor.Utilities.csproj">
+      <Project>{88b2cb37-5bfa-428e-ac7b-addb16d656ca}</Project>
+      <Name>MapEditor.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

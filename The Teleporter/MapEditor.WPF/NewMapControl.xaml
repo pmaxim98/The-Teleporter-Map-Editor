@@ -28,15 +28,18 @@
             <GradientStop Offset="0.0" Color="White" />
         </LinearGradientBrush>
 
+        <FontFamily x:Key="CardinalFont">./#Cardinal</FontFamily>
+
         <Style x:Key="RedTelepText" TargetType="Label">
             <Setter Property="Foreground" Value="{StaticResource RedAndBlackBrush}" />
             <Setter Property="FontSize" Value="22" />
             <Setter Property="Width" Value="100" />
             <Setter Property="Height" Value="40" />
             <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="FontFamily" Value="/MapEditor.Resources;component/Fonts/#Cardinal" />
+            <Setter Property="FontFamily" Value="{StaticResource CardinalFont}" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="RenderTransformOrigin" Value="1.0, 0.5" />
+            <Setter Property="FontWeight" Value="Normal"/>
         </Style>
 
         <Style x:Key="RedTelepTextBox" TargetType="TextBox">
@@ -59,7 +62,7 @@
             <Setter Property="Foreground" Value="{StaticResource RedAndBlackBrush}" />
             <Setter Property="Background" Value="{StaticResource GreenishBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource RedAndBlackBrush}" />
-            <Setter Property="FontFamily" Value="/MapEditor.Resources;component/Fonts/#Cardinal" />
+            <Setter Property="FontFamily" Value="{StaticResource CardinalFont}" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Width" Value="60" />
             <Setter Property="Height" Value="22" />
@@ -88,22 +91,20 @@
     <Grid Width="320" Height="200" Background="{StaticResource GreenishBrush}">
         <Label x:Name="SizeLabel" Content="Size:" Margin="0, 20, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
         <Label x:Name="TilesetLabel" Content="Tileset:" Margin="0, 55, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
-        <Label x:Name="BackgroundLabel" Content="Background:" Margin="0, 90, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
+        <Label x:Name="BackgroundLabel" Content="Background:" Margin="0, 90, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}" />
         <Label x:Name="TileSizeLabel" Content="Tile size:" Margin="0, 125, 160, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
         <Label x:Name="XLabel" Content="x" Margin="0, 18, 38, 0" HorizontalAlignment="Center" Style="{StaticResource RedTelepText}"/>
 
         <Button x:Name="CreateButton" Content="Create" HorizontalAlignment="Left" Margin="75, 170, 0, 0" Style="{StaticResource GreenTelepButton}" IsDefault="True" Click="CreateButton_Click" />
-        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0, 170, 75, 0" RenderTransformOrigin="1.0, 0.0" Style="{StaticResource GreenTelepButton}" IsCancel="True" />
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0, 170, 75, 0" RenderTransformOrigin="1.0, 0.0" Style="{StaticResource GreenTelepButton}" IsCancel="True" Click="CancelButton_Click" />
 
         <TextBox x:Name="WidthBox" Margin="0, 30, 10, 0" HorizontalAlignment="Center" MaxLength="4" Style="{StaticResource RedTelepTextBox}" TextChanged="WidthBox_TextChanged" />
         <TextBox x:Name="HeightBox" Margin="96, 30, 0, 0" HorizontalAlignment="Center" MaxLength="4" Style="{StaticResource RedTelepTextBox}" TextChanged="HeightBox_TextChanged" />
         <TextBox x:Name="TileSizeBox" Margin="0, 135, 10, 0" HorizontalAlignment="Center" MaxLength="3" Style="{StaticResource RedTelepTextBox}" TextChanged="TileSizeBox_TextChanged" />
 
-        <ComboBox x:Name="TilesetComboBox" Width="150" HorizontalAlignment="Center" Margin="100, 64, 0, 0" VerticalAlignment="Top" Style="{StaticResource RedTelepComboBox}">
-            <ComboBoxItem IsSelected="True">Select a tileset.</ComboBoxItem>
+        <ComboBox x:Name="TilesetComboBox" SelectedIndex="0" Width="150" HorizontalAlignment="Center" Margin="100, 64, 0, 0" VerticalAlignment="Top" Style="{StaticResource RedTelepComboBox}" DropDownOpened="TilesetComboBox_DropDownOpened">
         </ComboBox>
-        <ComboBox x:Name="BackgroundComboBox" Width="150" HorizontalAlignment="Center" Margin="100, 99, 0, 0" VerticalAlignment="Top" Style="{StaticResource RedTelepComboBox}">
-            <ComboBoxItem IsSelected="True">Select a background.</ComboBoxItem>
+        <ComboBox x:Name="BackgroundComboBox" SelectedIndex="0" Width="150" HorizontalAlignment="Center" Margin="100, 99, 0, 0" VerticalAlignment="Top" Style="{StaticResource RedTelepComboBox}" DropDownOpened="BackgroundComboBox_DropDownOpened">
         </ComboBox>
     </Grid>
 </UserControl>

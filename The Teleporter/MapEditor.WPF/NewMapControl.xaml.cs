@@ -1,72 +1,177 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
 using System.Windows.Controls;
+using System.Linq;
+using MapEditor.Utilities;
 
 namespace MapEditor.WPF
 {
-	public class MapData
-	{
-		public MapData(Size GridSize, string Tileset, string Background, short TileSize)
-		{
-			this.GridSize = GridSize;
-			this.Tileset = Tileset;
-			this.Background = Background;
-			this.TileSize = TileSize;
-		}
-
-		public Size GridSize { get; set; }
-		public string Tileset { get; set; }
-		public string Background { get; set; }
-		public short TileSize { get; set; }
-	}
-
 	public partial class NewMapControl : UserControl
 	{
-		private MapData mapData;
-
-		public MapData Mapdata { get { return mapData; } }
+		public event EventHandler CreateButtonClick;
+		public event EventHandler CancelButtonClick;
 
 		public NewMapControl()
 		{
 			InitializeComponent();
 
-			//foreach (var dir in System.IO.Directory.EnumerateFiles())
-			//TilesetComboBox.Items.Add();
+			SearchTilesets();
+			SearchBackgrounds();
+		}
+
+		private void CancelButton_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			EventHandler handler = CancelButtonClick;
+
+			if (handler != null)
+			{
+				handler(this, e);
+			}
 		}
 
 		private void CreateButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			//mapData = new MapData(new Size(int.Parse(WidthBox.Text), int.Parse(HeightBox.Text)), TilesetComboBox.Text, BackgroundComboBox.Text, short.Parse(TileSizeBox.Text));
-		}
+			var handler = CreateButtonClick;
 
-		private static string FormatToNumericString(string normalString)
-		{
-			string formattedText = string.Empty;
-
-			foreach (char ch in normalString)
+			if (handler != null)
 			{
-				if (char.IsDigit(ch))
-					formattedText += ch;
+				handler(this, e);
 			}
-
-			return formattedText;
 		}
 
 		private void WidthBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			WidthBox.Text = FormatToNumericString(WidthBox.Text);
-			WidthBox.CaretIndex = WidthBox.Text.Length;
+			int oldLength = WidthBox.Text.Length;
+			WidthBox.Text = Utils.FormatToNumericString(WidthBox.Text);
+
+			if (oldLength > WidthBox.Text.Length)
+			{
+				WidthBox.CaretIndex++;
+			}
+			else if (oldLength < WidthBox.Text.Length)
+			{
+				WidthBox.CaretIndex--;
+			}
+
+			CheckButtonEnabling();
 		}
 
 		private void HeightBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			HeightBox.Text = FormatToNumericString(HeightBox.Text);
-			HeightBox.CaretIndex = HeightBox.Text.Length;
+			int oldLength = HeightBox.Text.Length;
+			HeightBox.Text = Utils.FormatToNumericString(HeightBox.Text);
+
+			if (oldLength > HeightBox.Text.Length)
+			{
+				HeightBox.CaretIndex++;
+			}
+			else if (oldLength < HeightBox.Text.Length)
+			{
+				HeightBox.CaretIndex--;
+			}
+
+			CheckButtonEnabling();
 		}
 
 		private void TileSizeBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			TileSizeBox.Text = FormatToNumericString(TileSizeBox.Text);
-			TileSizeBox.CaretIndex = TileSizeBox.Text.Length;
+			int oldLength = TileSizeBox.Text.Length;
+			TileSizeBox.Text = Utils.FormatToNumericString(TileSizeBox.Text);
+
+			if (oldLength > TileSizeBox.Text.Length)
+			{
+				TileSizeBox.CaretIndex++;
+			}
+			else if (oldLength < TileSizeBox.Text.Length)
+			{
+				TileSizeBox.CaretIndex--;
+			}
+
+			CheckButtonEnabling();
+		}
+
+		private void TilesetComboBox_DropDownOpened(object sender, EventArgs e)
+		{
+			SearchTilesets();
+		}
+
+		private void BackgroundComboBox_DropDownOpened(object sender, EventArgs e)
+		{
+			SearchBackgrounds();
+		}
+
+		private void SearchTilesets()
+		{
+			var currentDirectory = new DirectoryInfo(Utils.GetDefaultTilesetsFolderPath());
+			var tilesetsDirsInCurrentDir = currentDirectory.GetDirectories();
+
+			var queryTilesets = from dir in tilesetsDirsInCurrentDir
+								from file in dir.GetFiles()
+								where (file.Extension == ".xml" || file.Extension == ".png") && (file.Name == (dir.Name + file.Extension))
+								select dir.Name;
+
+			if (queryTilesets.Any())
+			{
+				foreach (var tilesetName in queryTilesets)
+				{
+					if (!TilesetComboBox.Items.Contains(tilesetName))
+						TilesetComboBox.Items.Add(tilesetName);
+				}
+			}
+			else
+			{
+				DisableComboBox(TilesetComboBox, "No tilesets found.");
+			}
+
+			CheckButtonEnabling();
+		}
+
+		private void SearchBackgrounds()
+		{
+			var currentDirectory = new DirectoryInfo(Utils.GetDefaultBackgroundsFolderPath());
+			var backgroundsInCurrentDir = currentDirectory.GetFiles();
+			var queryBackgrounds =	from backgroundFile in backgroundsInCurrentDir
+									where (new[] { ".jpg", ".png", ".bmp" }).Contains(backgroundFile.Extension)
+									select Path.GetFileNameWithoutExtension(backgroundFile.Name);
+
+			if (queryBackgrounds.Any())
+			{
+				foreach (var backgroundName in queryBackgrounds)
+				{
+					if (!BackgroundComboBox.Items.Contains(backgroundName))
+						BackgroundComboBox.Items.Add(backgroundName);
+				}
+			}
+			else
+			{
+				DisableComboBox(BackgroundComboBox, "No backgrounds found.");
+			}
+
+			CheckButtonEnabling();
+		}
+
+		private void DisableComboBox(ComboBox comboBox, string message)
+		{
+			comboBox.IsEnabled = false;
+			comboBox.Items.Clear();
+			comboBox.Items.Add(message);
+			comboBox.SelectedIndex = 0;
+		}
+
+		private void CheckButtonEnabling()
+		{
+			if (TileSizeBox.Text != string.Empty && 
+				HeightBox.Text != string.Empty && 
+				WidthBox.Text != string.Empty && 
+				TilesetComboBox.IsEnabled &&
+				BackgroundComboBox.IsEnabled)
+			{
+				CreateButton.IsEnabled = true;
+			}
+			else
+			{
+				CreateButton.IsEnabled = false;
+			}
 		}
 	}
 }
