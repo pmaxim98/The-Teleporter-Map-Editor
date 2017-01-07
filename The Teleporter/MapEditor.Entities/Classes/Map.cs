@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace MapEditor.Entities
 {
-	class Map : INotifyPropertyChanged
+	public class Map : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Constructs a map with a basic structure.
