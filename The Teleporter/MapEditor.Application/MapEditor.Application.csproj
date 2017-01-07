@@ -80,6 +80,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MapEditor.Entities\MapEditor.Entities.csproj">
+      <Project>{829749f5-cf72-4802-a4c8-742b0cdefd71}</Project>
+      <Name>MapEditor.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MapEditor.Forms\MapEditor.Forms.csproj">
       <Project>{25c738aa-1a43-4707-8824-a590a9626f27}</Project>
       <Name>MapEditor.Forms</Name>

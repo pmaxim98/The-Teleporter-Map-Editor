@@ -1,19 +1,22 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using MapEditor.Entities;
+using MapEditor.Utilities;
 
 namespace TPMapEditor
 {
 	public partial class MainForm : Form
 	{
-		//Map map;
+		private Map map;
 
 		public MainForm()
 		{
 			InitializeComponent();
 
-			//InitializeMap();
+			InitializeMap();
 
 			InitializeWindowSize();
 			InitializeMenuStrip();
@@ -21,7 +24,7 @@ namespace TPMapEditor
 			InitializeSaveDialog();
 		}
 
-		/*
+		
 		private void InitializeMap()
 		{
 			map = new Map();
@@ -52,16 +55,15 @@ namespace TPMapEditor
 				PrimaryMapStatusStrip.Refresh();
 			};
 		}
-		*/
 
 		private void InitializeOpenDialog()
 		{
-			OpenMapDialog.InitialDirectory = MapEditor.Utilities.Utils.GetDefaultMapsFolderPath();
+			OpenMapDialog.InitialDirectory = Utils.GetDefaultMapsFolderPath();
 		}
 
 		private void InitializeSaveDialog()
 		{
-			SaveMapDialog.InitialDirectory = MapEditor.Utilities.Utils.GetDefaultMapsFolderPath();
+			SaveMapDialog.InitialDirectory = Utils.GetDefaultMapsFolderPath();
 		}
 
 		private void InitializeMenuStrip()
@@ -84,7 +86,18 @@ namespace TPMapEditor
 
 		private void NewFileMenuItem_Click(object sender, EventArgs e)
 		{
-			
+			MapEditor.Forms.NewMapForm newMapForm = new MapEditor.Forms.NewMapForm();
+			newMapForm.ShowDialog(this);
+
+			if (newMapForm.Response == DialogResult.OK)
+			{
+				map.GridSize = newMapForm.MapData.GridSize;
+				map.Background = newMapForm.MapData.Background;
+				map.Tileset = newMapForm.MapData.Tileset;
+				map.TileSize = newMapForm.MapData.TileSize;
+				map.ResetAllTiles();
+				map.FilePath = Path.Combine(Utils.GetDefaultMapsFolderPath(), "Temp");
+			}
 		}
 
 		private void LoadFileMenuItem_Click(object sender, EventArgs e)
@@ -94,7 +107,7 @@ namespace TPMapEditor
 
 		private void SaveFileMenuItem_Click(object sender, EventArgs e)
 		{
-			/*
+			
 			if (map.FilePath == string.Empty || !File.Exists(map.FilePath))
 			{
 				SaveAsFileMenuItem_Click(sender, e);
@@ -110,7 +123,6 @@ namespace TPMapEditor
 					MessageBox.Show(exc.Message, "Can't save the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
-			*/
 		}
 
 		private void SaveAsFileMenuItem_Click(object sender, EventArgs e)
@@ -133,7 +145,7 @@ namespace TPMapEditor
 		{
 			try
 			{
-				//map.Load(OpenMapDialog.FileName);
+				map.Load(OpenMapDialog.FileName);
 			}
 			catch (Exception exc)
 			{
@@ -154,7 +166,7 @@ namespace TPMapEditor
 		{
 			try
 			{
-				//map.Save(SaveMapDialog.FileName);
+				map.Save(SaveMapDialog.FileName);
 			}
 			catch (Exception exc)
 			{
