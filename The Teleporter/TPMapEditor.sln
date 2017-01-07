@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor.Utilities", "MapE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor.Entities", "MapEditor.Entities\MapEditor.Entities.csproj", "{829749F5-CF72-4802-A4C8-742B0CDEFD71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor.Logic", "MapEditor.Logic\MapEditor.Logic.csproj", "{5DED2DCA-D359-4C6D-8CAE-ADC66BA965E2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor.Resources", "MapEditor.Resources\MapEditor.Resources.csproj", "{3729E63E-C12E-47E5-93CC-8DD1A4A80774}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor.WPF", "MapEditor.WPF\MapEditor.WPF.csproj", "{37EFE25E-4B88-4DDA-8E10-696260FF85DE}"
@@ -39,10 +37,6 @@ Global
 		{829749F5-CF72-4802-A4C8-742B0CDEFD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{829749F5-CF72-4802-A4C8-742B0CDEFD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{829749F5-CF72-4802-A4C8-742B0CDEFD71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DED2DCA-D359-4C6D-8CAE-ADC66BA965E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DED2DCA-D359-4C6D-8CAE-ADC66BA965E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DED2DCA-D359-4C6D-8CAE-ADC66BA965E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DED2DCA-D359-4C6D-8CAE-ADC66BA965E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3729E63E-C12E-47E5-93CC-8DD1A4A80774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3729E63E-C12E-47E5-93CC-8DD1A4A80774}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3729E63E-C12E-47E5-93CC-8DD1A4A80774}.Release|Any CPU.ActiveCfg = Release|Any CPU
