@@ -8,33 +8,16 @@ namespace MapEditor.Entities
 {
 	public class Map : INotifyPropertyChanged
 	{
-		/// <summary>
-		/// Constructs a map with a basic structure.
-		/// </summary>
-		public Map()
-		{
-			TileSize = 50;
-			GridSize = new Size(5, 5);
-			FilePath = string.Empty;
-			Background = "Unnamed";
-			Tileset = "Unnamed";
-			ResetAllTiles();
-		}
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
 		/// Re-initializes all the tiles and sets them to the first tile of the tileset.
 		/// </summary>
 		public void ResetAllTiles()
 		{
-			Tiles = new Tile[GridSize.Height, GridSize.Width];
-
-			for (int row = 0; row < GridSize.Height; ++row)
-			{
-				for (int column = 0; column < GridSize.Width; ++column)
-				{
-					Tiles[row, column] = new Tile();
-				}
-			}
+			for (int row = 0; row < GridSize.Rows; ++row)
+				for (int column = 0; column < GridSize.Columns; ++column)
+					tiles[row, column] = new Tile();
 		}
 
 		/// <summary>
@@ -68,23 +51,6 @@ namespace MapEditor.Entities
 		}
 
 		/// <summary>
-		/// Gets the size of the map in terms of columns and rows.
-		/// </summary>
-		/// <returns>Returns a Size struct that contains the number of rows (height) and the number of columns (width) of the map.</returns>
-		public Size GridSize
-		{
-			get { return gridSize; }
-			set
-			{
-				if (value.Width <= 0 || value.Height <= 0)
-					throw new ArgumentException("Invalid map size.");
-
-				gridSize = value;
-				OnPropertyChanged();
-			}
-		}
-
-		/// <summary>
 		/// Gets the name of the background (NOT the path of it).
 		/// </summary>
 		/// <returns>Returns a string with the background's name.</returns>
@@ -93,9 +59,6 @@ namespace MapEditor.Entities
 			get { return background; }
 			set
 			{
-				if (string.IsNullOrWhiteSpace(value))
-					throw new ArgumentNullException("Background's string is null.");
-
 				background = value;
 				OnPropertyChanged();
 			}
@@ -110,10 +73,31 @@ namespace MapEditor.Entities
 			get { return tileset; }
 			set
 			{
-				if (string.IsNullOrWhiteSpace(value))
-					throw new ArgumentNullException("Tileset's string is null.");
-
 				tileset = value;
+				OnPropertyChanged();
+			} 
+		}
+
+		/// <summary>
+		/// Gets the size of the map in terms of columns and rows or it resizes the map.
+		/// </summary>
+		public GridSize GridSize
+		{
+			get { return new GridSize(tiles.GetLength(0), tiles.GetLength(1)); }
+			set
+			{
+				if (value.Rows == 0 || value.Columns == 0 || value.Rows >= MaxGridLength || value.Columns >= MaxGridLength)
+					throw new ArgumentException("Invalid grid size.");
+
+				Tile[,] tempTiles = new Tile[value.Rows, value.Columns];
+
+				int minRows = Math.Min(tiles.GetLength(0), value.Rows);
+				int minCols = Math.Min(tiles.GetLength(1), value.Columns);
+
+				for (int row = 0; row < minRows; ++row)
+					Array.Copy(tiles, tiles.GetLength(0) * row, tempTiles, value.Columns * row, minCols);
+
+				tiles = tempTiles;
 				OnPropertyChanged();
 			}
 		}
@@ -127,7 +111,7 @@ namespace MapEditor.Entities
 		/// <returns>Returns a Size struct that contains the number of rows (height) and the number of columns (width) of the map.</returns>
 		public Size Size
 		{
-			get { return new Size(GridSize.Height * TileSize, GridSize.Width * TileSize); }
+			get { return new Size(GridSize.Columns * TileSize, GridSize.Rows * TileSize); }
 		}
 
 		/// <summary>
@@ -139,8 +123,6 @@ namespace MapEditor.Entities
 			get { return Path.GetFileNameWithoutExtension(path); }
 		}
 
-		public Tile[,] Tiles { get; set; }
-
 		/// <summary>
 		/// Loads the map by using the absolute path of the map file.
 		/// </summary>
@@ -150,85 +132,67 @@ namespace MapEditor.Entities
 			string filePath = absolutePath;
 
 			string[] fileLines = File.ReadAllLines(filePath);
-			int totalLines = fileLines.Length;
+			string[] gridSizeString = fileLines[FileLineWithProperty.GridSize].Split(' ');
+			GridSize gridSize = new GridSize(int.Parse(gridSizeString[0]), int.Parse(gridSizeString[1]));
 
-			Size gridSize = new Size(
-				Convert.ToInt32(fileLines[FileLineWithProperty.GridSize].Split(' ')[1]), 
-				Convert.ToInt32(fileLines[FileLineWithProperty.GridSize].Split(' ')[0])
-			);
+			if (fileLines.Length != gridSize.Rows + FileLineWithProperty.Total)
+				throw new ArgumentOutOfRangeException("The map has more or less rows of tiles (" + (fileLines.Length - FileLineWithProperty.Total) +
+													  ") than it's initially specified height (" + gridSize.Rows + ").");
 
-			if (totalLines != gridSize.Height + FileLineWithProperty.Total)
-				throw new ArgumentOutOfRangeException("The map has more or less rows of tiles (" + (totalLines - FileLineWithProperty.Total) +
-													  ") than it's initially specified height (" + gridSize.Height + ").");
-
-			Tile[,] tiles = new Tile[gridSize.Height, gridSize.Width];
+			Tile[,] tiles = new Tile[gridSize.Rows, gridSize.Columns];
 
 			string tileset = fileLines[FileLineWithProperty.Tileset];
 			string background = fileLines[FileLineWithProperty.Background];
-			short tileSize = Convert.ToInt16(fileLines[FileLineWithProperty.TileSize]);
+			short tileSize = short.Parse(fileLines[FileLineWithProperty.TileSize]);
 
-			int totalProperties = 3;
-			for (int row = 0; row < gridSize.Height; ++row)
+			for (int row = 0, totalProperties = 3; row < gridSize.Rows; ++row)
 			{
 				int currentLine = row + FileLineWithProperty.Total;
 				string[] tilesToBeParsed = fileLines[currentLine].Split(new[] { ' ', ',', ';', '(', ')', '[', ']', '{', '}' }, StringSplitOptions.RemoveEmptyEntries);
 
-				if (gridSize.Width * totalProperties != tilesToBeParsed.Length)
+				if (gridSize.Columns * totalProperties != tilesToBeParsed.Length)
 					throw new ArgumentOutOfRangeException("The map has more or less tiles per row (" + (tilesToBeParsed.Length / totalProperties) +
-														  ") than it's initially specified row's width (" + gridSize.Width + "), " +
+														  ") than it's initially specified row's width (" + gridSize.Columns + "), " +
 														  "either it has invalid separators used in delimiting the tiles.");
-
-				for (int column = 0; column < gridSize.Width; ++column)
+	
+				for (int column = 0; column < gridSize.Columns; ++column)
 				{
 					int firstPropertyColumn = column * totalProperties;
 
-					tiles[row, column] = new Tile();
-					tiles[row, column].PropertiesID = Convert.ToByte(tilesToBeParsed[firstPropertyColumn]);
-					tiles[row, column].Damage = Convert.ToInt16(tilesToBeParsed[firstPropertyColumn + 1]);
-					tiles[row, column].Solidity = (Solidity)Convert.ToInt32(tilesToBeParsed[firstPropertyColumn + 2]);
+					tiles[row, column] = new Tile(
+						byte.Parse(tilesToBeParsed[firstPropertyColumn]),
+						short.Parse(tilesToBeParsed[firstPropertyColumn + 1]),
+						(Solidity)int.Parse(tilesToBeParsed[firstPropertyColumn + 2])
+					);
 				}
 			}
 
+			this.tiles = tiles;
+			TileSize = tileSize;
 			FilePath = filePath;
-			GridSize = gridSize;
-			Tiles = tiles;
 			Tileset = tileset;
 			Background = background;
-			TileSize = tileSize;
 		}
 
 		public void Save(string absolutePath)
 		{
 			using (StreamWriter writer = new StreamWriter(absolutePath))
 			{
-				writer.WriteLine(string.Join(" ", GridSize.Height, GridSize.Width));
-				writer.WriteLine(Tileset);
-				writer.WriteLine(Background);
+				writer.WriteLine(string.Join(" ", GridSize.Rows, GridSize.Columns));
+				writer.WriteLine(Tileset != string.Empty ? Tileset : "Unnamed");
+				writer.WriteLine(Background != string.Empty ? Background : "Unnamed");
 				writer.WriteLine(TileSize);
 
-				for (int row = 0; row < GridSize.Height; ++row)
+				for (int row = 0; row < GridSize.Rows; ++row)
 				{
-					for (int column = 0; column < GridSize.Width; ++column)
-					{
-						writer.Write(Tiles[row, column]);
-					}
+					for (int column = 0; column < GridSize.Columns; ++column)
+						writer.Write(tiles[row, column]);
 					writer.Write(Environment.NewLine);
 				}
 			}
 
 			FilePath = absolutePath;
 		}
-
-		struct FileLineWithProperty
-		{
-			public const int GridSize = 0;
-			public const int Tileset = 1;
-			public const int Background = 2;
-			public const int TileSize = 3;
-			public const int Total = 4;
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		private void OnPropertyChanged([CallerMemberName]string property = "")
 		{
@@ -244,6 +208,17 @@ namespace MapEditor.Entities
 		private string path;
 		private string background;
 		private string tileset;
-		private Size gridSize;
+		private Tile[,] tiles = new Tile[1, 1];
+
+		private const short MaxGridLength = 10000;
+
+		struct FileLineWithProperty
+		{
+			public const int GridSize = 0;
+			public const int Tileset = 1;
+			public const int Background = 2;
+			public const int TileSize = 3;
+			public const int Total = 4;
+		}
 	}
 }
