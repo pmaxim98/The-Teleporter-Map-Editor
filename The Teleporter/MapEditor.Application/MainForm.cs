@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -10,69 +9,12 @@ namespace TPMapEditor
 {
 	public partial class MainForm : Form
 	{
-		private Map map;
-
 		public MainForm()
 		{
 			InitializeComponent();
 
-			InitializeMap();
-
 			InitializeWindowSize();
 			InitializeMenuStrip();
-			InitializeOpenDialog();
-			InitializeSaveDialog();
-		}
-
-		
-		private void InitializeMap()
-		{
-			map = new Map();
-
-			map.PropertyChanged += (sender, e) =>
-			{
-				switch (e.PropertyName)
-				{
-					case "Background":
-						BackgroundStripStatusLabel.Text = string.Format("Background: {0}", map.Background);
-						break;
-					case "GridSize":
-						SizeStripStatusLabel.Text = string.Format("Size: ({0} rows, {1} columns)", map.GridSize.Height, map.GridSize.Width);
-						break;
-					case "Tileset":
-						TilesetStripStatusLabel.Text = string.Format("Tileset: {0}", map.Tileset);
-						break;
-					case "TileSize":
-						TileSizeStripStatusLabel.Text = string.Format("Tile size: {0}", map.TileSize);
-						break;
-					case "FilePath":
-						TitleStripStatusLabel.Text = string.Format("Title: {0}", map.Title != string.Empty ? map.Title : "Temp");
-						break;
-					default:
-						break;
-				}
-
-				PrimaryMapStatusStrip.Refresh();
-			};
-		}
-
-		private void InitializeOpenDialog()
-		{
-			OpenMapDialog.InitialDirectory = Utils.GetDefaultMapsFolderPath();
-		}
-
-		private void InitializeSaveDialog()
-		{
-			SaveMapDialog.InitialDirectory = Utils.GetDefaultMapsFolderPath();
-		}
-
-		private void InitializeMenuStrip()
-		{
-			foreach (ToolStripMenuItem menuItem in PrimaryContextMenuStrip.Items)
-				((ToolStripDropDownMenu)menuItem.DropDown).ShowImageMargin = false;
-			
-			PrimaryContextMenuStrip.Renderer = new MapEditor.Forms.Renderers.GreenStripRenderer();
-			PrimaryMapStatusStrip.Renderer = new MapEditor.Forms.Renderers.GreenStripRenderer();
 		}
 
 		private void InitializeWindowSize()
@@ -84,6 +26,30 @@ namespace TPMapEditor
 			Size = new Size(newWidth, newHeight);
 		}
 
+		private void InitializeMenuStrip()
+		{
+			foreach (ToolStripMenuItem menuItem in PrimaryContextMenuStrip.Items)
+				((ToolStripDropDownMenu)menuItem.DropDown).ShowImageMargin = false;
+			
+			PrimaryContextMenuStrip.Renderer = new MapEditor.Forms.Renderers.GreenStripRenderer();
+			PrimaryMapStatusStrip.Renderer = new MapEditor.Forms.Renderers.GreenStripRenderer();
+
+			InitializeOpenDialog();
+			InitializeSaveDialog();
+		}
+
+		private void InitializeOpenDialog()
+		{
+			OpenMapDialog.InitialDirectory = Utils.GetDefaultMapsFolderPath();
+		}
+
+		private void InitializeSaveDialog()
+		{
+			SaveFileMenuItem.Enabled = false;
+			SaveAsFileMenuItem.Enabled = false;
+			SaveMapDialog.InitialDirectory = Utils.GetDefaultMapsFolderPath();
+		}
+
 		private void NewFileMenuItem_Click(object sender, EventArgs e)
 		{
 			MapEditor.Forms.NewMapForm newMapForm = new MapEditor.Forms.NewMapForm();
@@ -91,23 +57,52 @@ namespace TPMapEditor
 
 			if (newMapForm.Response == DialogResult.OK)
 			{
-				map.GridSize = newMapForm.MapData.GridSize;
-				map.Background = newMapForm.MapData.Background;
-				map.Tileset = newMapForm.MapData.Tileset;
-				map.TileSize = newMapForm.MapData.TileSize;
+				map = new Map
+				{
+					Background = newMapForm.MapData.Background,
+					Tileset = newMapForm.MapData.Tileset,
+					TileSize = newMapForm.MapData.TileSize,
+					GridSize = new GridSize(newMapForm.MapData.GridSize.Height, newMapForm.MapData.GridSize.Width),
+					FilePath = Path.Combine(Utils.GetDefaultMapsFolderPath(), "Unnamed")
+				};
+
 				map.ResetAllTiles();
-				map.FilePath = Path.Combine(Utils.GetDefaultMapsFolderPath(), "Temp");
+
+				SaveFileMenuItem.Enabled = false;
+				SaveAsFileMenuItem.Enabled = true;
 			}
 		}
 
 		private void LoadFileMenuItem_Click(object sender, EventArgs e)
 		{
-			OpenMapDialog.ShowDialog();
+			if (OpenMapDialog.ShowDialog() == DialogResult.OK)
+			{
+				try
+				{
+					map = new Map();
+					map.Load(OpenMapDialog.FileName);
+
+					SaveFileMenuItem.Enabled = true;
+					SaveAsFileMenuItem.Enabled = true;
+				}
+				catch (Exception exc)
+				{
+					string[] exceptionMessage = exc.Message.Split(new string[] { "Parameter name: " }, StringSplitOptions.None);
+
+					if (exceptionMessage.Length <= 1)
+					{
+						MessageBox.Show("Invalid map format used: " + exceptionMessage[0], "Can't load the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+					else
+					{
+						MessageBox.Show(exceptionMessage[1], "Can't load the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
+			}
 		}
 
 		private void SaveFileMenuItem_Click(object sender, EventArgs e)
 		{
-			
 			if (map.FilePath == string.Empty || !File.Exists(map.FilePath))
 			{
 				SaveAsFileMenuItem_Click(sender, e);
@@ -127,51 +122,27 @@ namespace TPMapEditor
 
 		private void SaveAsFileMenuItem_Click(object sender, EventArgs e)
 		{
-			SaveMapDialog.ShowDialog();
+			if (SaveMapDialog.ShowDialog() == DialogResult.OK)
+			{
+				try
+				{
+					map.Save(SaveMapDialog.FileName);
+					SaveFileMenuItem.Enabled = true;
+				}
+				catch (Exception exc)
+				{
+					MessageBox.Show(exc.Message, "Can't save the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
 		}
 
 		private void QuitFileMenuItem_Click(object sender, EventArgs e)
 		{
 			string message = "Are you sure you want to quit? Any unsaved changes will be lost.";
-			DialogResult result = MessageBox.Show(message, "Quit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-			if (result == DialogResult.Yes)
-			{
+			if (MessageBox.Show(message, "Quit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 				Close();
-			}
 		}
 
-		private void OpenMapDialog_FileOk(object sender, CancelEventArgs e)
-		{
-			try
-			{
-				map.Load(OpenMapDialog.FileName);
-			}
-			catch (Exception exc)
-			{
-				string[] exceptionMessage = exc.Message.Split(new string[] { "Parameter name: " }, StringSplitOptions.None);
-
-				if (exceptionMessage.Length <= 1)
-				{
-					MessageBox.Show("Invalid map format used: " + exceptionMessage[0], "Can't load the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-				else
-				{
-					MessageBox.Show(exceptionMessage[1], "Can't load the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-		}
-
-		private void SaveMapDialog_FileOk(object sender, CancelEventArgs e)
-		{
-			try
-			{
-				map.Save(SaveMapDialog.FileName);
-			}
-			catch (Exception exc)
-			{
-				MessageBox.Show(exc.Message, "Can't save the map!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
+		private Map map;
 	}
 }

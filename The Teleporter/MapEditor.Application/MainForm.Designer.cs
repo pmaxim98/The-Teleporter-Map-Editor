@@ -34,14 +34,8 @@
 			this.noMapLoadedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.OpenMapDialog = new System.Windows.Forms.OpenFileDialog();
 			this.PrimaryMapStatusStrip = new System.Windows.Forms.StatusStrip();
-			this.TitleStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.TilesetStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.BackgroundStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.SizeStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.TileSizeStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.SaveMapDialog = new System.Windows.Forms.SaveFileDialog();
 			this.PrimaryContextMenuStrip.SuspendLayout();
-			this.PrimaryMapStatusStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// PrimaryContextMenuStrip
@@ -155,84 +149,22 @@
 			this.OpenMapDialog.DefaultExt = "tpm";
 			this.OpenMapDialog.Filter = "The Teleporter Map (*.tpm)|*.tpm";
 			this.OpenMapDialog.Title = "Load Map";
-			this.OpenMapDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenMapDialog_FileOk);
 			// 
 			// PrimaryMapStatusStrip
 			// 
 			this.PrimaryMapStatusStrip.BackColor = System.Drawing.SystemColors.Control;
-			this.PrimaryMapStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TitleStripStatusLabel,
-            this.TilesetStripStatusLabel,
-            this.BackgroundStripStatusLabel,
-            this.SizeStripStatusLabel,
-            this.TileSizeStripStatusLabel});
-			this.PrimaryMapStatusStrip.Location = new System.Drawing.Point(0, 532);
+			this.PrimaryMapStatusStrip.Location = new System.Drawing.Point(0, 539);
 			this.PrimaryMapStatusStrip.Name = "PrimaryMapStatusStrip";
-			this.PrimaryMapStatusStrip.Size = new System.Drawing.Size(984, 29);
+			this.PrimaryMapStatusStrip.Size = new System.Drawing.Size(984, 22);
 			this.PrimaryMapStatusStrip.SizingGrip = false;
 			this.PrimaryMapStatusStrip.TabIndex = 1;
 			this.PrimaryMapStatusStrip.Text = "statusStrip1";
-			// 
-			// TitleStripStatusLabel
-			// 
-			this.TitleStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.TitleStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.TitleStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
-			this.TitleStripStatusLabel.Name = "TitleStripStatusLabel";
-			this.TitleStripStatusLabel.Size = new System.Drawing.Size(192, 23);
-			this.TitleStripStatusLabel.Spring = true;
-			this.TitleStripStatusLabel.Text = "Title:";
-			// 
-			// TilesetStripStatusLabel
-			// 
-			this.TilesetStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.TilesetStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.TilesetStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.TilesetStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
-			this.TilesetStripStatusLabel.Name = "TilesetStripStatusLabel";
-			this.TilesetStripStatusLabel.Size = new System.Drawing.Size(192, 23);
-			this.TilesetStripStatusLabel.Spring = true;
-			this.TilesetStripStatusLabel.Text = "Tileset:";
-			// 
-			// BackgroundStripStatusLabel
-			// 
-			this.BackgroundStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.BackgroundStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.BackgroundStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.BackgroundStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
-			this.BackgroundStripStatusLabel.Name = "BackgroundStripStatusLabel";
-			this.BackgroundStripStatusLabel.Size = new System.Drawing.Size(192, 23);
-			this.BackgroundStripStatusLabel.Spring = true;
-			this.BackgroundStripStatusLabel.Text = "Background:";
-			// 
-			// SizeStripStatusLabel
-			// 
-			this.SizeStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.SizeStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.SizeStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.SizeStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
-			this.SizeStripStatusLabel.Name = "SizeStripStatusLabel";
-			this.SizeStripStatusLabel.Size = new System.Drawing.Size(192, 23);
-			this.SizeStripStatusLabel.Spring = true;
-			this.SizeStripStatusLabel.Text = "Size:";
-			// 
-			// TileSizeStripStatusLabel
-			// 
-			this.TileSizeStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.TileSizeStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.TileSizeStripStatusLabel.Font = new System.Drawing.Font("Segoe UI Semilight", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.TileSizeStripStatusLabel.Margin = new System.Windows.Forms.Padding(1, 3, 0, 3);
-			this.TileSizeStripStatusLabel.Name = "TileSizeStripStatusLabel";
-			this.TileSizeStripStatusLabel.Size = new System.Drawing.Size(192, 23);
-			this.TileSizeStripStatusLabel.Spring = true;
-			this.TileSizeStripStatusLabel.Text = "Tile size:";
 			// 
 			// SaveMapDialog
 			// 
 			this.SaveMapDialog.DefaultExt = "tpm";
 			this.SaveMapDialog.Filter = "The Teleporter Map (*.tpm)|*.tpm";
 			this.SaveMapDialog.Title = "Save Map";
-			this.SaveMapDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveMapDialog_FileOk);
 			// 
 			// MainForm
 			// 
@@ -252,8 +184,6 @@
 			this.Text = "The Teleporter - Map Editor";
 			this.PrimaryContextMenuStrip.ResumeLayout(false);
 			this.PrimaryContextMenuStrip.PerformLayout();
-			this.PrimaryMapStatusStrip.ResumeLayout(false);
-			this.PrimaryMapStatusStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -272,11 +202,6 @@
 		private System.Windows.Forms.ToolStripMenuItem noMapLoadedToolStripMenuItem;
 		private System.Windows.Forms.OpenFileDialog OpenMapDialog;
 		private System.Windows.Forms.StatusStrip PrimaryMapStatusStrip;
-		private System.Windows.Forms.ToolStripStatusLabel TitleStripStatusLabel;
-		private System.Windows.Forms.ToolStripStatusLabel TilesetStripStatusLabel;
-		private System.Windows.Forms.ToolStripStatusLabel BackgroundStripStatusLabel;
-		private System.Windows.Forms.ToolStripStatusLabel SizeStripStatusLabel;
-		private System.Windows.Forms.ToolStripStatusLabel TileSizeStripStatusLabel;
 		private System.Windows.Forms.SaveFileDialog SaveMapDialog;
 	}
 }
