@@ -107,7 +107,7 @@ namespace MapEditor.WPF
 
 			var queryTilesets = from dir in tilesetsDirsInCurrentDir
 								from file in dir.GetFiles()
-								where (file.Extension == ".xml" || file.Extension == ".png") && (file.Name == (dir.Name + file.Extension))
+								where (file.Extension == ".xml" || file.Extension == ".png" || file.Extension == ".bmp" || file.Extension == ".jpg") && (file.Name == (dir.Name + file.Extension))
 								select dir.Name;
 
 			if (queryTilesets.Any())
